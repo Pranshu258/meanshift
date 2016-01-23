@@ -1,4 +1,13 @@
 IMPLEMENTATION OF MEAN SHIFT IMAGE SEGMENTATION IN PYTHON
 Author(s): Pranshu Gupta, Abhishek Jain
-============================================================================================
+===================================================================================================
 
+
+
+===================================================================================================
+
+Resources:
+---------------------------------------------------------------------------------------------------
+http://sociograph.blogspot.in/2011/11/accessible-introduction-to-mean-shift.html
+https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/cluster/mean_shift_.py
+https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/cluster/tests/test_mean_shift.py

@@ -44,9 +44,12 @@ img_width = len(img[0])					#
 print "Constructing the feature matrix ..."
 data = get_data(img)
 
-print "Estimating the bandwidth of the Kernel ..."
-bandwidth = estimate_bandwidth(data, quantile=0.3, n_samples=None, random_state=0)
+# print "Estimating the bandwidth of the Kernel ..."
+# bandwidth = estimate_bandwidth(data, quantile=0.3, n_samples=None, random_state=0)
+# print bandwidth
 
+bandwidth = (img_height + img_width)/2.0
 print "Getting the initial kernel seeds ..."
 seeds = get_bin_seeds(data, bandwidth, 2)
+print "Number of kernel seeds chosen: " + str(len(seeds))
 

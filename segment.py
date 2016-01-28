@@ -6,11 +6,12 @@ import Image
 import numpy as np
 import time as t
 import sys
-import gaussian
+from gaussian_mean import gaussian_mean
 
 ###################################################################################################
 bandwidth = None
 Bin = None
+kertype = "flat"
 
 if len(sys.argv) == 4:
 	bandwidth = int(sys.argv[1])
@@ -20,11 +21,14 @@ else:
 	print "Usage: python segment.py bandwidth seeding_bin_size gaussian"
 	exit()
 
+if gaussian == 1:
+	kertype = "gaussian"
+
 m = 1
 S = 5
 threshold = 1.0
 
-img = Image.open("input.jpg")
+img = Image.open("img/input.jpg")
 img.load()
 img = np.array(img)
 
@@ -87,7 +91,7 @@ for r in xrange(0,rows,Bin):
 end = t.time()
 
 img = Image.fromarray(seg_img)
-img.save("output_" + str(bandwidth) + "_" + str(Bin) + ".jpg")
+img.save("img/" + kertype + "_output_" + str(bandwidth) + "_" + str(Bin) + ".jpg")
 
 print "Time taken for segmentation: " + str((end - start)/60) + " min"
 print "Bandwidth: " + str(bandwidth)

@@ -82,4 +82,12 @@ Spatial Distance Normalization Parameter (S): 5
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-After these tests we choose the values as in experiment 8
+EXPERIMENT 9: GAUSSIAN KERNEL
+------------------------------------------------------------------
+Time taken for segmentation: 21.5082682172 min
+Bandwidth: 40
+Seeds Bin Size: 60
+Number of Seeds: 54
+Relative weight given to spatial distance (m): 1
+Spatial Distance Normalization Parameter (S): 5
+

@@ -1,0 +1,33 @@
+Pranshu Gupta, Abhishek Jain
+//////////////////////////////////////////////////////////////////
+TESTS DONE ON 86000.JPG (ORIGINAL IMAGE)
+Image Size: rows-481 cols-321
+Resizing: NONE
+//////////////////////////////////////////////////////////////////
+
+EXPERIMENT 1: FLAT KERNEL
+==================================================================
+Time taken for segmentation: 2.4 min
+Bandwidth: 10
+Seeds Bin Size: 40
+Number of Seeds: 117
+Relative weight given to spatial distance (m): 1
+Spatial Distance Normalization Parameter (S): 5
+
+EXPERIMENT 2: FLAT KERNEL
+==================================================================
+Time taken for segmentation: 25.5 min
+Bandwidth: 20
+Seeds Bin Size: 20
+Number of Seeds: 425
+Relative weight given to spatial distance (m): 1
+Spatial Distance Normalization Parameter (S): 5
+
+EXPERIMENT 3: FLAT KERNEL
+==================================================================
+Time taken for segementation: 66.8 min
+Bandwidth: 30
+Seeds Bin Size: 15
+Number of Seeds: 726
+Relative weight given to spatial distance (m): 1
+Spatial Distance Normalization Parameter (S): 5

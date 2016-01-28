@@ -6,16 +6,18 @@ import Image
 import numpy as np
 import time as t
 import sys
+import gaussian
 
 ###################################################################################################
 bandwidth = None
 Bin = None
 
-if len(sys.argv) == 3:
+if len(sys.argv) == 4:
 	bandwidth = int(sys.argv[1])
 	Bin = int(sys.argv[2])
+	gaussian = int(sys.argv[3])
 else:
-	print "Usage: python segment.py bandwidth seeding_bin_size"
+	print "Usage: python segment.py bandwidth seeding_bin_size gaussian"
 	exit()
 
 m = 1
@@ -58,10 +60,11 @@ for r in xrange(0,rows,Bin):
 			kernel = np.array(kernel)
 			# Get the mean of the kernel which will be used as the new seed
 			
-			# Flat Kernel
-			mean = np.mean(kernel,axis=0,dtype=np.int64)	# for flat kernel
-			# Gaussian Kernel
-			
+			# Kernel
+			if gaussian == 0:
+				mean = np.mean(kernel,axis=0,dtype=np.int64)
+			elif gaussian == 1:
+				mean = gaussian_mean(kernel, float(rows), float(cols))
 
 			# Get the shift
 			dc = np.linalg.norm(seed[2:] - mean[2:])

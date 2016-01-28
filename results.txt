@@ -1,21 +1,15 @@
+IMAGE SEGMENTATION USING MEAN SHIFT ALGORITHM
 Pranshu Gupta, Abhishek Jain
-//////////////////////////////////////////////////////////////////
+===================================================================================================
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 TESTS DONE ON 86000.JPG (ORIGINAL IMAGE)
 Image Size: rows-481 cols-321
 Resizing: NONE
-//////////////////////////////////////////////////////////////////
 
 EXPERIMENT 1: FLAT KERNEL
-==================================================================
-Time taken for segmentation: 2.4 min
-Bandwidth: 10
-Seeds Bin Size: 40
-Number of Seeds: 117
-Relative weight given to spatial distance (m): 1
-Spatial Distance Normalization Parameter (S): 5
-
-EXPERIMENT 2: FLAT KERNEL
-==================================================================
+------------------------------------------------------------------
 Time taken for segmentation: 25.5 min
 Bandwidth: 20
 Seeds Bin Size: 20
@@ -23,11 +17,69 @@ Number of Seeds: 425
 Relative weight given to spatial distance (m): 1
 Spatial Distance Normalization Parameter (S): 5
 
-EXPERIMENT 3: FLAT KERNEL
-==================================================================
+EXPERIMENT 2: FLAT KERNEL
+------------------------------------------------------------------
 Time taken for segementation: 66.8 min
 Bandwidth: 30
 Seeds Bin Size: 15
 Number of Seeds: 726
 Relative weight given to spatial distance (m): 1
 Spatial Distance Normalization Parameter (S): 5
+
+EXPERIMENT 3: FLAT KERNEL
+------------------------------------------------------------------
+Time taken for segmentation: 2.4 min
+Bandwidth: 10
+Seeds Bin Size: 40
+Number of Seeds: 117
+Relative weight given to spatial distance (m): 1
+Spatial Distance Normalization Parameter (S): 5
+
+EXPERIMENT 4: FLAT KERNEL
+------------------------------------------------------------------
+Time taken for segmentation: 10.3 min
+Bandwidth: 20
+Seeds Bin Size: 40
+Number of Seeds: 117
+Relative weight given to spatial distance (m): 1
+Spatial Distance Normalization Parameter (S): 5
+
+EXPERIMENT 5: FLAT KERNEL
+------------------------------------------------------------------
+Time taken for segmentation: 18.2 min
+Bandwidth: 30
+Seeds Bin Size: 40
+Number of Seeds: 117
+Relative weight given to spatial distance (m): 1
+Spatial Distance Normalization Parameter (S): 5
+
+EXPERIMENT 6: FLAT KERNEL
+------------------------------------------------------------------
+Time taken for segmentation: 27.7701984167 min
+Bandwidth: 40
+Seeds Bin Size: 40
+Number of Seeds: 117
+Relative weight given to spatial distance (m): 1
+Spatial Distance Normalization Parameter (S): 5
+
+EXPERIMENT 7: FLAT KERNEL
+------------------------------------------------------------------
+Time taken for segmentation: 6.29774133364 min
+Bandwidth: 20
+Seeds Bin Size: 60
+Number of Seeds: 54
+Relative weight given to spatial distance (m): 1
+Spatial Distance Normalization Parameter (S): 5
+
+EXPERIMENT 8: FLAT KERNEL
+------------------------------------------------------------------
+Time taken for segmentation: 16.4593591332 min
+Bandwidth: 40
+Seeds Bin Size: 60
+Number of Seeds: 54
+Relative weight given to spatial distance (m): 1
+Spatial Distance Normalization Parameter (S): 5
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+After these tests we choose the values as in experiment 8

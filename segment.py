@@ -5,16 +5,24 @@
 import Image
 import numpy as np
 import time as t
+import sys
 
 ###################################################################################################
-bandwidth = 30
+bandwidth = None
+Bin = None
+
+if len(sys.argv) == 3:
+	bandwidth = int(sys.argv[1])
+	Bin = int(sys.argv[2])
+else:
+	print "Usage: python segment.py bandwidth seeding_bin_size"
+	exit()
+
 m = 1
 S = 5
 threshold = 1.0
-Bin = 15
 
-print "Loading the Image ..."
-img = Image.open("86000.jpg")
+img = Image.open("input.jpg")
 img.load()
 img = np.array(img)
 
@@ -27,7 +35,6 @@ meandist = np.array([[1000.0 for r in xrange(cols)] for c in xrange(rows)])
 
 # Get the kernel for a point
 start = t.time()
-print "Starting mean shift image segemntation ..."
 means = []
 for r in xrange(0,rows,Bin):
 	for c in xrange(0,cols,Bin):
@@ -51,8 +58,10 @@ for r in xrange(0,rows,Bin):
 			kernel = np.array(kernel)
 			# Get the mean of the kernel which will be used as the new seed
 			
+			# Flat Kernel
 			mean = np.mean(kernel,axis=0,dtype=np.int64)	# for flat kernel
-			#mean = gaussian(kernel)
+			# Gaussian Kernel
+			
 
 			# Get the shift
 			dc = np.linalg.norm(seed[2:] - mean[2:])
@@ -62,6 +71,7 @@ for r in xrange(0,rows,Bin):
 			if dsm <= threshold:
 				break
 		means.append(seed)
+
 		# Check if this seed is better than the last assigned color for the pixels in kernel
 		for k in kernel:
 			i = k[0]
@@ -74,12 +84,11 @@ for r in xrange(0,rows,Bin):
 end = t.time()
 
 img = Image.fromarray(seg_img)
-img.save("myoutput.jpg")
+img.save("output_" + str(bandwidth) + "_" + str(Bin) + ".jpg")
 
-print "Time taken for segementation: " + str(end - start)
+print "Time taken for segmentation: " + str((end - start)/60) + " min"
 print "Bandwidth: " + str(bandwidth)
 print "Seeds Bin Size: " + str(Bin)
 print "Number of Seeds: " + str(len(means)) 
 print "Relative weight given to spatial distance (m): " + str(m)
 print "Spatial Distance Normalization Parameter (S): " + str(S)
-print "Segmentation done, image saved as myoutput.jpg\n"

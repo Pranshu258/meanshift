@@ -24,10 +24,11 @@ else:
 if gaussian == 1:
 	kertype = "gaussian"
 
-m = 1
+m = 0.5
 S = 5
 threshold = 1.0
 
+print "Loading the Image ..."
 img = Image.open("img/input.jpg")
 img.load()
 img = np.array(img)
@@ -38,9 +39,12 @@ rows, cols, dim = img.shape
 
 seg_meandist = np.array([[1000.0 for r in xrange(cols)] for c in xrange(rows)])
 meandist = np.array([[1000.0 for r in xrange(cols)] for c in xrange(rows)])
+labels = np.array([[-1 for r in xrange(cols)] for c in xrange(rows)])
 
+print "Running Mean Shift Algorithm ..."
 # Get the kernel for a point
 start = t.time()
+
 means = []
 for r in xrange(0,rows,Bin):
 	for c in xrange(0,cols,Bin):
@@ -68,7 +72,7 @@ for r in xrange(0,rows,Bin):
 			if gaussian == 0:
 				mean = np.mean(kernel,axis=0,dtype=np.int64)
 			elif gaussian == 1:
-				mean = gaussian_mean(kernel, float(rows), float(cols))
+				mean = gaussian_mean(kernel, seed, bandwidth)
 
 			# Get the shift
 			dc = np.linalg.norm(seed[2:] - mean[2:])
@@ -87,15 +91,20 @@ for r in xrange(0,rows,Bin):
 			if D < seg_meandist[i][j]:
 				seg_meandist[i][j] = D
 				seg_img[i][j] = mean[2:]
+				labels[i][j] = len(means) - 1
 
 end = t.time()
 
+
+
+print "Saving the segmented image ..."
 img = Image.fromarray(seg_img)
 img.save("img/" + kertype + "_output_" + str(bandwidth) + "_" + str(Bin) + ".jpg")
 
 print "Time taken for segmentation: " + str((end - start)/60) + " min"
 print "Bandwidth: " + str(bandwidth)
 print "Seeds Bin Size: " + str(Bin)
-print "Number of Seeds: " + str(len(means)) 
+print "Number of Seeds: " + str(len(means))
+print "Number of means after convergence: "
 print "Relative weight given to spatial distance (m): " + str(m)
 print "Spatial Distance Normalization Parameter (S): " + str(S)

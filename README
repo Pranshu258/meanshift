@@ -2,8 +2,9 @@ IMPLEMENTATION OF MEAN SHIFT IMAGE SEGMENTATION IN PYTHON
 Author(s): Pranshu Gupta, Abhishek Jain
 ===================================================================================================
 
-weights = np.exp(-1*norm((neighbors - old_mean)/bandwidth,axis=1))
-new_mean = np.sum(weights[:,None]*neighbors,axis=0)/np.sum(weights)
+Kernels Experimented on: Flat and Gaussian
+Modules used: Numpy, Image, Sys, Time
+
 
 
 

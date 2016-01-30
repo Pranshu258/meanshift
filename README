@@ -1,11 +1,37 @@
 IMPLEMENTATION OF MEAN SHIFT IMAGE SEGMENTATION IN PYTHON
 Author(s): Pranshu Gupta, Abhishek Jain
+CS676: ASSIGNMENT 1, INDIAN INSTITUTE OF TECHNOLOGY KANPUR
 ===================================================================================================
 
-Kernels Experimented on: Flat and Gaussian
-Modules used: Numpy, Image, Sys, Time
+The description of our implementation is as follows:
+---------------------------------------------------------------------------------------------------
+We load the image using the 'Image' module of python. It gives us a matrix of RGB values. 
+The shape of this matrix is same as the resolution of the image.
+We pick one initial seed for mean shift filtering at every 40th pixel in height and width. Then we 
+run the mean shift algorithm serially for each of these seeds. We iterate atmost 10 times at each 
+seed for it to converge, otherwise we move on to the next seed.
+We have implemented Flat and Gaussian Kernel for Mean Shift Algorithm, the user has to choose one 
+them at the run time by supplying a command line argument. (0 for flat and 1 for gaussian)
+After we get the converged seeds, we group together the seeds which are closer than the bandwidth. 
+We do this by taking their average vector.
+Then we find out the nearest seed for each of the pixels in the image and assign new RGB values 
+to get the segmented image.
 
+Running the Application
+---------------------------------------------------------------------------------------------------
+$ python segment.py bandwidth_value is_kernel_gaussian
+[here is_kernel_guassian should be 0 if flat kernel is to be used otherwise it shoul be 1]
 
+RESULTS
+***************************************************************************************************
+IMG/BW			|   03   |   05   |   10   |   20   |   30   |   40   |   50   |   60   |			
+---------------------------------------------------------------------------------------------------
+input1			|   93   |   --   |   --   |   --   |   --   |   --   |   --   |   --   
+input2			|   --   |   --   |   --   |   --   |   --   |   --   |   --   |   --   |
+input3			|   --   |   --   |   --   |   --   |   --   |   --   |   --   |   --   |
+input4			|   --   |   --   |   --   |   --   |   --   |   --   |   --   |   --   |
+
+The plot for this data is saved as 'plot.png'
 
 
 ===================================================================================================

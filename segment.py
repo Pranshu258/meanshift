@@ -14,22 +14,24 @@ Bin = 40
 kertype = "flat"
 
 
-if len(sys.argv) == 3:
-	bandwidth = int(sys.argv[1])
-	gaussian = int(sys.argv[2])
+if len(sys.argv) == 4:
+	filename = str(sys.argv[1])
+	bandwidth = int(sys.argv[2])
+	gaussian = int(sys.argv[3])
 else:
 	# print "Usage: python segment.py bandwidth do_gaussian"
 	exit()
 
 if gaussian == 1:
-	kertype = "gaussian"
+	kertype = "gauss"
+
 
 m = 1
 S = 5
 threshold = 1.0
 
 # print "Loading the Image ..."
-img = Image.open("img/input.jpg")
+img = Image.open("img/" + filename + ".jpg")
 img.load()
 img = np.array(img)
 
@@ -51,10 +53,10 @@ for r in xrange(0,rows,Bin):
 		for n in xrange(15):
 			x = seed[0]
 			y = seed[1]
-			r1 = max(0,x-bandwidth*5)
-			r2 = min(r1+bandwidth*10, rows)
-			c1 = max(0,y-bandwidth*5)
-			c2 = min(c1+bandwidth*10, cols)
+			r1 = max(0,x-Bin)
+			r2 = min(r1+Bin*2, rows)
+			c1 = max(0,y-Bin)
+			c2 = min(c1+Bin*2, cols)
 			kernel = []
 			for i in xrange(r1,r2):
 				for j in xrange(c1,c2):
@@ -64,7 +66,7 @@ for r in xrange(0,rows,Bin):
 					if D < bandwidth:
 						kernel.append([i,j,img[i][j][0],img[i][j][1],img[i][j][2]])
 			kernel = np.array(kernel)			
-
+			# # print kernel
 			if gaussian == 0:
 				mean = np.mean(kernel,axis=0,dtype=np.int64)
 			elif gaussian == 1:
@@ -76,11 +78,13 @@ for r in xrange(0,rows,Bin):
 			dsm = np.linalg.norm([dc,ds])
 			seed = mean
 			if dsm <= threshold:
-				# print "Mean " + str(len(means)+1) + " converges in: " + str(n) + " iterations"
+				# # print "Mean " + str(len(means)+1) + " converges in: " + str(n) + " iterations"
 				break
 		means.append(seed)
 
 end = t.time()
+
+# print "Time taken for mean shift: " + str((end - start)/60) + " min"
 
 # print "Grouping together the means that are closer than the bandwidth ..."
 flags = [1 for me in means]
@@ -104,25 +108,23 @@ for i in xrange(len(means)):
 		converged_means.append(means[i])
 converged_means = np.array(converged_means)
 
-# # print "Constructing the segmented image ..."
-# for i in xrange(rows):
-# 	for j in xrange(cols):
-# 		for c in xrange(len(converged_means)):
-# 			dc = np.linalg.norm(img[i][j] - converged_means[c][2:])
-# 			ds = (np.linalg.norm(np.array([i,j]) - converged_means[c][:2]))*m/S
-# 			D = np.linalg.norm([dc,ds])
-# 			if D < meandist[i][j]:
-# 				meandist[i][j] = D
-# 				labels[i][j] = c
-# 		seg_img[i][j] = converged_means[labels[i][j]][2:] 
+# print "Number of Seeds: " + str(len(means))
+# print "Number of Means: " + str(len(converged_means))
+
+# print "Constructing the segmented image ..."
+for i in xrange(rows):
+	for j in xrange(cols):
+		for c in xrange(len(converged_means)):
+			dc = np.linalg.norm(img[i][j] - converged_means[c][2:])
+			ds = (np.linalg.norm(np.array([i,j]) - converged_means[c][:2]))*m/S
+			D = np.linalg.norm([dc,ds])
+			if D < meandist[i][j]:
+				meandist[i][j] = D
+				labels[i][j] = c
+		seg_img[i][j] = converged_means[labels[i][j]][2:] 
 
 # print "Saving the segmented image ..."
-# seg_img = Image.fromarray(seg_img)
-# seg_img.save("img/" + kertype + "_output_" + str(bandwidth) + ".jpg")
-
-# print "Time taken for segmentation: " + str((end - start)/60) + " min"
-# print "Bandwidth: " + str(bandwidth)
-# print "Number of Means before convergence: " + str(len(means))
-# print "Number of Means after convergence: " + str(len(converged_means))
+seg_img = Image.fromarray(seg_img)
+seg_img.save("img/" + kertype + "_output_" + filename + "_" + str(bandwidth) + ".jpg")
 
 print bandwidth, len(converged_means)

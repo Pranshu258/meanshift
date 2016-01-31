@@ -22,25 +22,37 @@ Running the Application
 $ python segment.py bandwidth_value is_kernel_gaussian
 [here is_kernel_guassian should be 0 if flat kernel is to be used otherwise it should be 1]
 
-RESULTS (FLAT KERNEL)
+RESULTS (FLAT KERNEL) - #MEANS VERSUS BANDWIDTH
 ***************************************************************************************************
 IMG/BW			|   10   |   20   |   30   |   40   |   50   |   60   |   80   |	
 ---------------------------------------------------------------------------------------------------
 input1			|   93   |   73   |   66   |   62   |   61   |   60   |   61   |
-input2			|   80   |   66   |   --   |   --   |   --   |   --   |   --   |
-input3			|   --   |   --   |   --   |   --   |   --   |   --   |   --   |
-input4			|   --   |   --   |   --   |   --   |   --   |   --   |   --   |
-input5			|   --   |   --   |   --   |   --   |   --   |   --   |   --   |
+input2			|   80   |   66   |   63   |   61   |   58   |   59   |   59   |
+input3			|   95   |   75   |   65   |   57   |   56   |   55   |   52   |
+input4			|   89   |   70   |   62   |   59   |   60   |   55   |   52   |
+input5			|   87   |   68   |   63   |   60   |   61   |   62   |   59   |
 
 
-RESULTS (GAUSSIAN KERNEL)
+RESULTS (GAUSSIAN KERNEL) - #MEANS VERSUS BANDWIDTH
 ***************************************************************************************************
 IMG/BW			|   10   |   20   |   30   |   40   |   50   |   60   |   80   |	
 ---------------------------------------------------------------------------------------------------
-input1			|   97   |   74   |   66   |   --   |   --   |   --   |   --   |
-input2			|   --   |   --   |   --   |   --   |   --   |   --   |   --   |
-input3			|   --   |   --   |   --   |   --   |   --   |   --   |   --   |
-input4			|   --   |   --   |   --   |   --   |   --   |   --   |   --   |
-input5			|   --   |   --   |   --   |   --   |   --   |   --   |   --   |
+input1			|   97   |   74   |   66   |   64   |   64   |   61   |   59   |
+input2			|   80   |   69   |   61   |   61   |   60   |   59   |   57   |
+input3			|  101   |   72   |   63   |   61   |   58   |   56   |   57   |
+input4			|   95   |   70   |   65   |   61   |   61   |   59   |   55   |
+input5			|   94   |   69   |   61   |   61   |   61   |   60   |   60   |
+
+INFERENCES
+---------------------------------------------------------------------------------------------------
+By plotting the number of converged means vs. Bandwidth for segmentation with flat kernel, we see 
+that the elbow of most of the curves is located at bandwidth = 40. So, we say that this value of bandwidth 
+should be used.
+Similarly, in plots for segmentation with the gaussian kernel, we have the elbows located near bandwidth = 30.
+So, we say that 30 is the good value of bandwidth.
+
+If we keep on inceasing the bandwidth, we will lose useful information. This can be seen easily in segmentation 
+result for the image 'input5.jpg', wherein the soldiers and trees all appear to be mixed up.  
+
 
 ===================================================================================================

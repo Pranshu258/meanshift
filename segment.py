@@ -19,7 +19,7 @@ if len(sys.argv) == 4:
 	bandwidth = int(sys.argv[2])
 	gaussian = int(sys.argv[3])
 else:
-	# print "Usage: python segment.py bandwidth do_gaussian"
+	print "Usage: python segment.py bandwidth do_gaussian"
 	exit()
 
 if gaussian == 1:
@@ -30,7 +30,7 @@ m = 1
 S = 5
 threshold = 1.0
 
-# print "Loading the Image ..."
+print "Loading the Image " + filename + ".jpg"
 img = Image.open("img/" + filename + ".jpg")
 img.load()
 img = np.array(img)
@@ -42,7 +42,7 @@ rows, cols, dim = img.shape
 meandist = np.array([[1000.0 for r in xrange(cols)] for c in xrange(rows)])
 labels = np.array([[-1 for r in xrange(cols)] for c in xrange(rows)])
 
-# print "Running the Mean Shift algorithm ..."
+print "Running the Mean Shift algorithm ..."
 
 start = t.time()
 
@@ -66,7 +66,7 @@ for r in xrange(0,rows,Bin):
 					if D < bandwidth:
 						kernel.append([i,j,img[i][j][0],img[i][j][1],img[i][j][2]])
 			kernel = np.array(kernel)			
-			# # print kernel
+			# print kernel
 			if gaussian == 0:
 				mean = np.mean(kernel,axis=0,dtype=np.int64)
 			elif gaussian == 1:
@@ -78,15 +78,15 @@ for r in xrange(0,rows,Bin):
 			dsm = np.linalg.norm([dc,ds])
 			seed = mean
 			if dsm <= threshold:
-				# # print "Mean " + str(len(means)+1) + " converges in: " + str(n) + " iterations"
+				# print "Mean " + str(len(means)+1) + " converges in: " + str(n) + " iterations"
 				break
 		means.append(seed)
 
 end = t.time()
 
-# print "Time taken for mean shift: " + str((end - start)/60) + " min"
+print "Time taken for mean shift: " + str((end - start)/60) + " min"
 
-# print "Grouping together the means that are closer than the bandwidth ..."
+print "Grouping together the means that are closer than the bandwidth ..."
 flags = [1 for me in means]
 for i in xrange(len(means)):
 	if flags[i] == 1:
@@ -111,7 +111,7 @@ converged_means = np.array(converged_means)
 # print "Number of Seeds: " + str(len(means))
 # print "Number of Means: " + str(len(converged_means))
 
-# print "Constructing the segmented image ..."
+print "Constructing the segmented image ..."
 for i in xrange(rows):
 	for j in xrange(cols):
 		for c in xrange(len(converged_means)):
@@ -123,7 +123,7 @@ for i in xrange(rows):
 				labels[i][j] = c
 		seg_img[i][j] = converged_means[labels[i][j]][2:] 
 
-# print "Saving the segmented image ..."
+print "Saving the segmented image ..."
 seg_img = Image.fromarray(seg_img)
 seg_img.save("img/" + kertype + "_output_" + filename + "_" + str(bandwidth) + ".jpg")
 
